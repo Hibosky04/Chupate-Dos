@@ -8,10 +8,14 @@ public class DeckOfCards {
     private Stack<Card> DeckOfCards;
     private static final int NumOfCards = 40;
 
+   // no estoy segura
     public DeckOfCards() {
         this.DeckOfCards = new Stack<>();
-        for (int i = 0; i < NumOfCards; i++) {
-            DeckOfCards.add(new Card(i + 1));
+        for (int i = 1; i <= 10; i++) {
+            DeckOfCards.add(i,Card.AS_BASTOS );
+            DeckOfCards.add(i,Card.AS_COPAS );
+            DeckOfCards.add(i,Card.AS_ESPADAS );
+            DeckOfCards.add(i,Card.AS_OROS );
         }
     }
 
