@@ -1,37 +1,33 @@
 package gal.uvigo.esei.aed1.chupatedos.core;
-import java.util.Stack;
+
+import es.uvigo.esei.aed1.tads.stack.LinkedStack;
+import es.uvigo.esei.aed1.tads.stack.Stack;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class Table {
-
-    private Stack<Card>[] tableCard;
-
-    public Table(Stack<Card>[] tableCard) {
-        this.tableCard = tableCard;
-    }
     
-    /**
-     * Añade una carta a cada fila de la mesa
-     *
-     * @param c
-     */
-    public void FirstCard(Card[] c) {
+    private Stack playedCards;
+//constructor
+    public Table() {
+        this.playedCards = playedCards;
     }
-    
-    /**
-     * Coloca la carta en la fila asignada
-     *
-     * @param c
-     */
-    public void PutCard(Card c) {
+//añadir carta a la mesa
+    public void addPlayedCard(Card card){
+        this.playedCards.push(card);
+    }
+//num total de cartas en la mesa 
+    public int size(){
+        return this.playedCards.size();
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Cartas en la Mesa: ");
-        sb.append(tableCard);
-        sb.append("\n");
+        sb.append(this.playedCards.top());
+        sb.append("Total card played").append(size());
         return sb.toString();
     }
-
 }
