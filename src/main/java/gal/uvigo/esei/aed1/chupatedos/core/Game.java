@@ -25,9 +25,9 @@ public class Game {
      * Metodo principal para jugar
      */
     public void play() {
-        crearJugadores();
-        deckOfCard.barajar();
-        repartirCartas();
+        createPlayer();
+        deckOfCard.shuffle();
+        collectCard();
         iu.showPlayers(players);
 
     }
@@ -35,7 +35,7 @@ public class Game {
     /**
      * Crea los jugadores
      */
-    public void crearJugadores() {
+    public void createPlayer() {
         for (String s : iu.askPlayersName()) {
             this.players.add(new Player(s));
         }
@@ -44,10 +44,10 @@ public class Game {
     /**
      * Reparte diez cartas a cada jugador al inicio de cada ronda
      */
-    public void repartirCartas() {
+    public void collectCard() {
         for (int i = 0; i < 7; i++) {
             for (Player player : players) {
-                player.CollectCard(deckOfCard.quitarCarta());
+                player.collectCard(deckOfCard.removeCard());
             }
         }
     }
