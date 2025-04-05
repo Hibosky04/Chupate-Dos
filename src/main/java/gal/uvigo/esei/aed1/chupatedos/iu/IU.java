@@ -82,7 +82,7 @@ public class IU {
         List<String> name = new ArrayList();
         int numPlayers = numberPlayers();
         for (int i = 0; i < numPlayers; i++) {
-            String Name = readString("Insert name of the player: ");
+            String Name = readString("Insert player name: ");
             name.add(Name);
         }
         return name;
@@ -117,7 +117,7 @@ public class IU {
         int num = 0;
         do {
             showPlayer(player);
-            num = readNumber("Insert " + player.getName() + " the number of the card selected: ");
+            num = readNumber("Insert " + player.getName() + " the number of the card selected is: ");
         } while (num < 0 || num > player.getHand().size());
         return num;
     }
