@@ -20,7 +20,7 @@ public class DeckOfCards {
     /**
      * baraja con la instrucción shuffle()
      */
-    public void barajar() {
+    public void shuffleDeck() {
         Collections.shuffle(this.DeckOfCards);
     }
 
@@ -29,7 +29,7 @@ public class DeckOfCards {
      *
      * @return una carta de la baraja
      */
-    public Card quitarCarta() {
+    public Card removeCard() {
         Card toret = deck.pop();
         return toret;
     }
@@ -39,7 +39,7 @@ public class DeckOfCards {
      *
      * @param c
      */
-    public void insertarCarta(Card c) {
+    public void addCard(Card c) {
         deck.add(c);
     }
 
