@@ -22,7 +22,7 @@ public class Player {
         this.name = name;
     }
     
-    public void getHand(){
+    public List<Card> getHand(){
         return this.hand;
 
 
