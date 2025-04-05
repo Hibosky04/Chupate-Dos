@@ -30,7 +30,7 @@ public class DeckOfCards {
      * @return una carta de la baraja
      */
     public Card quitarCarta() {
-        Card toret = DeckOfCards.pop();
+        Card toret = deck.pop();
         return toret;
     }
 
@@ -40,7 +40,7 @@ public class DeckOfCards {
      * @param c
      */
     public void insertarCarta(Card c) {
-        DeckOfCards.add(c);
+        deck.add(c);
     }
 
 }
