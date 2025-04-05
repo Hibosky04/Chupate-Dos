@@ -33,7 +33,10 @@ public class Player {
     public void setHiddenCard(Card hiddenCard) {
         this.hiddenCard = hiddenCard;
     }
-
+    /*
+    * el jugador escoge un carta de su mano y la juega
+    * @param i
+    */
     public Card playCard(int i){
         while(!(i<=0|| i> hand.size())){
            i=askNumCard();
