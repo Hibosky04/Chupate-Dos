@@ -12,7 +12,7 @@ public class Table {
     private Stack playedCards;
 //constructor
     public Table() {
-        this.playedCards = playedCards;
+        this.playedCards = new LinkedStack<>();
     }
 //añadir carta a la mesa
     public void addPlayedCard(Card card){
