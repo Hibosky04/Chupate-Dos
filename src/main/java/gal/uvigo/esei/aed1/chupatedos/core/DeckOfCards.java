@@ -8,7 +8,7 @@ public class DeckOfCards {
     private Stack<Card> deck;
     private static final int NumOfCards = 40;
 
-   // no estoy segura
+
     public DeckOfCards() {
         this.deck = new LinkedStack<>();
          for(Card cards : Card.values())
