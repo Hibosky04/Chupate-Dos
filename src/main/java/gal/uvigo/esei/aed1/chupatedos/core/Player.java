@@ -49,7 +49,7 @@ public class Player {
      * (robo de la mano inicial)
      * @param collectedCard 
      */
-    public void CollectCard(Card collectedCard) {
+    public void collectCard(Card collectedCard) {
         if (hand.isEmpty()) {
             int j = 0;
             while (j < hand.size()) {
