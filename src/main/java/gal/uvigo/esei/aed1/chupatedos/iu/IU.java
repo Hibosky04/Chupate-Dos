@@ -113,7 +113,7 @@ public class IU {
      * @param player
      * @return numero de posicion de la carta que se desea jugar
      */
-    public int pedirNumCarta(Player player) {
+    public int askNumCard(Player player) {
         int num = 0;
         do {
             showPlayer(player);
@@ -134,7 +134,7 @@ public class IU {
      * Muestra las cartas que hay en la mesa
      * @param table 
      */
-    public void mostrarMesa(Table table) {
+    public void showTable(Table table) {
         System.out.println(table);
     }
 
