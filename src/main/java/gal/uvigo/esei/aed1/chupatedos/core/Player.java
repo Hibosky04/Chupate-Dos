@@ -30,17 +30,25 @@ public class Player {
         this.hiddenCard = hiddenCard;
     }
 
+    public Card playCard(int i){
+        while(!(i<=0|| i> hand.size())){
+           i=askNumCard();
+        }
+        return hand.remove(hand.get(i-1));
+    }
+
     /**
      * El jugador recoge la carta que le reparten y la ordena en su mano
+     * (robo de la mano inicial)
      * @param collectedCard 
      */
     public void CollectCard(Card collectedCard) {
-        if (!hand.isEmpty()) {
+        if (hand.isEmpty()) {
             int j = 0;
-            while (j < hand.size() && collectedCard.getNumber() > hand.get(j).getNumber()) {
+            while (j < hand.size()) {
+                hand.add(j, collectedCard);
                 j++;
             }
-            hand.add(j, collectedCard);
         } else {
             hand.add(collectedCard);
         }
@@ -56,3 +64,4 @@ public class Player {
     }
  
 }
+
