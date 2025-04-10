@@ -21,7 +21,7 @@ public class DeckOfCards {
      * baraja con la instrucción shuffle()
      */
     public void shuffleDeck() {
-        Collections.shuffle(this.DeckOfCards);
+        Collections.shuffle(this.deck);
     }
 
     /**
