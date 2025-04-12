@@ -38,10 +38,8 @@ public class Player {
     * @param i
     */
     public Card playCard(int i){
-        while(!(i<=0|| i> hand.size())){
-           i=askNumCard();
-        }
-        return hand.remove(hand.get(i-1));
+        this.hiddenCard = hand.remove(i);
+        return this.hiddenCard;
     }
 
     /**
