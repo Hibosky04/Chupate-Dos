@@ -26,7 +26,7 @@ public class Game {
      */
     public void play() {
         createPlayer();
-        deckOfCard.shuffle();
+        deckOfCard.shuffleDeck();
         collectCard();
         iu.showPlayers(players);
 
