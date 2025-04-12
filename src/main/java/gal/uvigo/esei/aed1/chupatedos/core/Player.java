@@ -24,7 +24,7 @@ public class Player {
     
     public List<Card> getHand(){
         return this.hand;
-
+    }
 
     public Card getHiddenCard() {
         return hiddenCard;
