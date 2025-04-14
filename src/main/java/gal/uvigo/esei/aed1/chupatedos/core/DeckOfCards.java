@@ -10,7 +10,7 @@ public class DeckOfCards {
 
 
     public DeckOfCards() {
-        this.deck = new LinkedStack<>();
+        this.deck = new Stack<>();
          for(Card cards : Card.values())
         {
             deck.push(cards);        
