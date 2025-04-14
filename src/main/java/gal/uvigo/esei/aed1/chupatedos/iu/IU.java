@@ -143,7 +143,7 @@ public class IU {
      * @param player 
      */
     public void showSelectedCard(Player player) {
-        System.out.println(player.getName() + " Your card selected is: " + player.getHiddenCard());
+       System.out.println(player.getName() + " Your card selected is: " + player.playCard(this.askNumCard(player)));
     }
     
     /**
