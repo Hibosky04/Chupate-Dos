@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Table {
     
-    private Stack playedCards;
+    private Stack<Card> playedCards;
 //constructor
     public Table() {
         this.playedCards = new LinkedStack<>();
