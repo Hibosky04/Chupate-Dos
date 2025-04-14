@@ -79,7 +79,7 @@ public class IU {
     }
 
     public List<String> askPlayersName() {
-        List<String> name = new ArrayList();
+        List<String> name = new ArrayList<>();
         int numPlayers = numberPlayers();
         for (int i = 0; i < numPlayers; i++) {
             String Name = readString("Insert player name: ");
