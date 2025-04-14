@@ -6,40 +6,27 @@ import java.util.List;
 public class Player {
     private String name;
     private List<Card> hand;
-    private Card selectCard;
+    
 
     public Player(String name) {
         this.name = name;
         this.hand = new ArrayList<>();
-        this.selectCard = null;
+        
     }
 
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
     
     public List<Card> getHand(){
         return this.hand;
-    }
-
-    public Card getSelectCard() {
-        return hiddenCard;
-    }
-
-    public void setSelectCard(Card selectCard) {
-        this.hiddenCard = hiddenCard;
     }
     /*
     * el jugador escoge un carta de su mano y la juega
     * @param i
     */
     public Card playCard(int i){
-        this.selectCard = hand.remove(i);
-        return this.selectCard;
+        return hand.remove(i);
     }
 
     /**
