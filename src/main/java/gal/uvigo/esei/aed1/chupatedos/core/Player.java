@@ -6,12 +6,12 @@ import java.util.List;
 public class Player {
     private String name;
     private List<Card> hand;
-    private Card hiddenCard;
+    private Card selectCard;
 
     public Player(String name) {
         this.name = name;
         this.hand = new ArrayList<>();
-        this.hiddenCard = null;
+        this.selectCard = null;
     }
 
     public String getName() {
@@ -26,11 +26,11 @@ public class Player {
         return this.hand;
     }
 
-    public Card getHiddenCard() {
+    public Card getSelectCard() {
         return hiddenCard;
     }
 
-    public void setHiddenCard(Card hiddenCard) {
+    public void setSelectCard(Card selectCard) {
         this.hiddenCard = hiddenCard;
     }
     /*
@@ -38,8 +38,8 @@ public class Player {
     * @param i
     */
     public Card playCard(int i){
-        this.hiddenCard = hand.remove(i);
-        return this.hiddenCard;
+        this.selectCard = hand.remove(i);
+        return this.selectCard;
     }
 
     /**
