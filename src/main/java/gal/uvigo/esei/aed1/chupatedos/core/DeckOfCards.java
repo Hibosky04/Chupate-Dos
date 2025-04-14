@@ -43,4 +43,10 @@ public class DeckOfCards {
         deck.add(c);
     }
 
+     @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Deck of card: ").append(deck);
+        return sb.toString();
+    }
 }
