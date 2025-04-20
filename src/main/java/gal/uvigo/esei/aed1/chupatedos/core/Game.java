@@ -78,5 +78,20 @@ public class Game {
         }
         return legal;
     }
+     /**
+    * Selecciona la carta que se va jugar en cada jugador
+    */
+    public void selectedCards(){
+        iu.showSelectedCard(player);
+        iu.askNumCard(player);
+        iu.showSelectedCard(player);
+    }
+    /*
+    * Se añade a la mesa la carta que se va a jugar después de seleccionarla
+    */
+    public void playCard (){
+        Table.push(this.player.get(0).remove(selectCards));
+    }
+
 }    
 
