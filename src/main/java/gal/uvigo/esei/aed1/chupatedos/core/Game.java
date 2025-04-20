@@ -51,7 +51,14 @@ public class Game {
             }
         }
     }
-}
+    /**
+    * Selecciona la carta que se va jugar en cada jugador
+    */
+    public void selectedCards(){
+        iu.showSelectedCard(player);
+        iu.askNumCard(player);
+        iu.showSelectedCard(player);
+    }
 
  
 
