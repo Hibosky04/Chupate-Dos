@@ -40,7 +40,7 @@ public class DeckOfCards {
      * @param c
      */
     public void addCard(Card c) {
-        deck.add(c);
+        deck.push(c);
     }
 
     @Override
