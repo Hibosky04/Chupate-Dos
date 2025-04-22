@@ -27,18 +27,17 @@ public class Game {
      */
     public void play() {
         createPlayer();
-        deckOfCard.shuffleDeck();
-        collectCard();
-        table.addPlayedCard(firstCard());
-        iu.showPlayers(players);
-        iu.showTable(table);
-        do{
-            this.players.add(this.players.remove(0));
-            iu.showPlayerTurn(this.players.get(0));
-            iu.showSelectedCards(this.players.get(0));
-            iu.showSelectedCards(legalCards(this.players.get(0));
-            
-        }while(!this.players.getHand().isEmpty());    
+         do {
+            deckOfCard.shuffleDeck();
+            collectCard();
+            table.addPlayedCard(firstCard());
+            iu.showPlayers(players);
+            iu.showTable(table);
+            for (int i = 0; i < 7; i++) {
+                colocarCartas();
+                iu.showTable(table);
+                iu.showPlayers(players);
+        } while (!endOfGame());
     }
 
     /**
@@ -80,10 +79,14 @@ public class Game {
      /**
     * Selecciona la carta que se va jugar en cada jugador
     */
-    public void selectedCards(){
-        iu.showSelectedCard(player);
-        iu.askNumCard(player);
-        iu.showSelectedCard(player);
+    public List<Card> selectedCards(){
+        List<Card> listSelectedCards = new ArrayList<>();
+        for(Player player : players){
+            player.setCard(player.playCard(iu.askNumCard(player)));
+            listSelectedCards.add(player.getCard());
+        }
+        iu.showSelectedCard((Player) listSelectedCards);
+        return listSelectedCards;
     }
     /*
     * Se añade a la mesa la carta que se va a jugar después de seleccionarla
@@ -105,6 +108,16 @@ public class Game {
             deckOfCard.shuffleDeck();
         }
     return deckOfCard.removeCard();
+    }
+
+     public boolean endOfGame() {
+        boolean finPartida = false;
+        for (Player player : players) {
+            if (player.getHand().isEmpty()) {
+                finPartida = true;
+            }
+        }
+        return finPartida;
     }
 }    
 
