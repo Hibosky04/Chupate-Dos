@@ -55,11 +55,10 @@ public class Game {
      * Reparte diez cartas a cada jugador al inicio de cada ronda
      */
     public void collectCard() {
-        for (Player player : players) {
-            while (player.getHand().size() < 7) {
+        for (int i=0; i<7; i++){
+            for (Player player : players) {
                 player.collectCard(deckOfCard.removeCard());
             }
-
         }
     }
 
