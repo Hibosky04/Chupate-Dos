@@ -36,15 +36,7 @@ public class Player {
      * @param collectedCard 
      */
     public void collectCard(Card collectedCard) {
-        if (hand.isEmpty()) {
-            int j = 0;
-            while (j < hand.size()) {
-                hand.add(j, collectedCard);
-                j++;
-            }
-        } else {
             hand.add(collectedCard);
-        }
     }
     
 
