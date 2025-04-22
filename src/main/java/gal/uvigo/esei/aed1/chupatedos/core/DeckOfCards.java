@@ -6,7 +6,7 @@ import java.util.Stack;
 public class DeckOfCards {
 
     private Stack<Card> deck;
-    private static final int NumOfCards = 40;
+    private final int NumOfCards = 40;
 
 
     public DeckOfCards() {
@@ -15,6 +15,10 @@ public class DeckOfCards {
         {
             deck.push(cards);        
         }
+    }
+    
+    public int getNumOfCards() {
+        return this.NumOfCards;
     }
 
     /**
