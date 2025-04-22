@@ -111,15 +111,14 @@ public class IU {
     
     /**
      * Pide el número de carta que el jugador desea echar
-     * @param player
+     * @param listOfCards
      * @return numero de posicion de la carta que se desea jugar
      */
-    public int askNumCard(Player player) {
+    public int askNumCard(List<Card> listOfCards) {
         int num = 0;
         do {
-            showPlayer(player);
-            num = readNumber("Insert " + player.getName() + " the number of the card selected is: ");
-        } while (num < 0 || num > player.getHand().size());
+            num = readNumber("\nInsert the number of the card selected is: ");
+        } while (num < 0 || num > listOfCards.size());
         return num;
     }
     
@@ -153,7 +152,25 @@ public class IU {
      */
 
     public void showPlayerTurn(String name) {
-        System.out.println("The turn is: " + name);
+        System.out.println("\nThe turn is: " + name);
+    }
+    /**
+     *
+     * Muestra las cartas legales
+     * @param legalCards
+     */
+    
+    public void showLegalCards(List<Card> legalCards){
+        for(Card c : legalCards){
+            System.out.println(c);
+        }
+    }
+    /*
+    * Muestra el ganador
+    *
+    */
+    public void showWinner(Player player){
+        System.out.println("\nThe winner is: " + player.getName());
     }
  
 }
