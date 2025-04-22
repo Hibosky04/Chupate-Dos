@@ -15,6 +15,10 @@ public class Table {
     public Table() {
         this.playedCards = new LinkedStack<>();
     }
+
+     public Stack<Card> getPlayedCards() {
+        return playedCards;
+    }
     
 //añadir carta a la mesa
     public void addPlayedCard(Card card){
