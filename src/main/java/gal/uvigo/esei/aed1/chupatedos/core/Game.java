@@ -27,17 +27,25 @@ public class Game {
      */
     public void play() {
         createPlayer();
-         do {
-            deckOfCard.shuffleDeck();
-            collectCard();
-            table.addPlayedCard(firstCard());
-            iu.showPlayers(players);
-            iu.showTable(table);
-            for (int i = 0; i < 7; i++) {
-                colocarCartas();
-                iu.showTable(table);
-                iu.showPlayers(players);
-        } while (!endOfGame());
+        deckOfCard.shuffleDeck();
+        collectCard();
+        table.addPlayedCard(firstCard());
+        iu.showPlayers(players);
+        iu.showTable(table);
+        while(!endOfGame()) {
+            for (int i = 0; i < players.size(); i++) {
+                iu.showPlayerTurn(players.get(i).getName());
+                iu.showPlayer(players.get(i));
+                if (!legalCards(players.get(i)).isEmpty()) {
+                    iu.showLegalCards(legalCards(players.get(i)));
+                    selectCard(players.get(i));
+                    iu.showTable(table);
+                } else {
+                    players.get(i).collectCard(loadCard());
+                }
+
+            }
+        } 
     }
 
     /**
@@ -68,9 +76,9 @@ public class Game {
         return this.deckOfCard.removeCard();
     }
     public List<Card> legalCards(Player player){
-        List<Card> legal = new LinkedList<>();
-        for(Card card : player.getHand()){
-            if(card.getNumber().isEqual(table.top().getNumber())||card.getSuit().isEqual(table.top().getSuit()){
+        List<Card> legal = new ArrayList<>();
+        for (Card card : player.getHand()) {
+            if (table.getPlayedCards().top().getNumber() == card.getNumber() || table.getPlayedCards().top().getSuit() == card.getSuit()) {
                 legal.add(card);
             }
         }
@@ -79,14 +87,8 @@ public class Game {
      /**
     * Selecciona la carta que se va jugar en cada jugador
     */
-    public List<Card> selectedCards(){
-        List<Card> listSelectedCards = new ArrayList<>();
-        for(Player player : players){
-            player.setCard(player.playCard(iu.askNumCard(player)));
-            listSelectedCards.add(player.getCard());
-        }
-        iu.showSelectedCard((Player) listSelectedCards);
-        return listSelectedCards;
+    public void selectCard(Player player) {
+        table.addPlayedCard(player.playCard(iu.askNumCard(legalCards(player))));
     }
     /*
     * Se añade a la mesa la carta que se va a jugar después de seleccionarla
@@ -115,6 +117,7 @@ public class Game {
         for (Player player : players) {
             if (player.getHand().isEmpty()) {
                 finPartida = true;
+                iu.showWinner(player);
             }
         }
         return finPartida;
