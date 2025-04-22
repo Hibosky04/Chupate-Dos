@@ -93,5 +93,19 @@ public class Game {
         Table.push(this.player.get(0).remove(selectCards));
     }
 
+    /*
+    * Se carga una carta del mazo, si no hay cartas se rellena el mazo con las cartas jugadas menos la ultima que se jugo, se barajea el mazo
+    */
+    public Card loadCard(){
+        if(deckOfCard.getNumOfCards()==0){
+            Card lastCardPlayed = table.getPlayedCards().pop();
+            while(!table.getPlayedCards().isEmpty()){
+                deckOfCard.addCard(table.getPlayedCards().pop());
+            }
+            table.getPlayedCards().push(lastCardPlayed);
+            deckOfCard.shuffleDeck();
+        }
+    return deckOfCard.removeCard();
+    }
 }    
 
