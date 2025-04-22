@@ -51,7 +51,7 @@ public class Game {
     }
 
     /**
-     * Reparte diez cartas a cada jugador al inicio de cada ronda
+     * Reparte siete cartas a cada jugador al inicio de cada ronda
      */
     public void collectCard() {
         for (int i=0; i<7; i++){
