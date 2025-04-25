@@ -16,9 +16,10 @@ public class Table {
         this.playedCards = new LinkedStack<>();
     }
 
-     public Stack<Card> getPlayedCards() {
+    public Stack<Card> getPlayedCards() {
         return playedCards;
     }
+    
     
 //añadir carta a la mesa
     public void addPlayedCard(Card card){
@@ -29,12 +30,17 @@ public class Table {
     public int size(){
         return this.playedCards.size();
     }
+    
+    
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Upside Card: ").append(this.playedCards.top());
-        sb.append("\nTotal card played: ").append(size());
+        sb.append(this.playedCards.top());
+        sb.append("Total card played ").append(size());
         return sb.toString();
     }
+
+    
+    
 }
