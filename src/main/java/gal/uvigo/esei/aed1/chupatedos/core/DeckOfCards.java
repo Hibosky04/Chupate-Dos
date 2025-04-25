@@ -6,7 +6,6 @@ import java.util.Stack;
 public class DeckOfCards {
 
     private Stack<Card> deck;
-    private static final int NumOfCards = 40;
 
 
     public DeckOfCards() {
@@ -16,11 +15,15 @@ public class DeckOfCards {
             deck.push(cards);        
         }
     }
-
-    public static int getNumOfCards() {
-        return NumOfCards;
+    
+    /**
+     * Devuelve cuantas cartas hay en el mazo
+     * @return el numero de cartas restantes
+     */
+    
+    public int getSize(){
+        return deck.size();
     }
-
     
     /**
      * baraja con la instrucción shuffle()
