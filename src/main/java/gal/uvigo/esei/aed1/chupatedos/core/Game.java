@@ -75,7 +75,7 @@ public class Game {
     public Card firstCard() {
         return this.deckOfCard.removeCard();
     }
-    public List<Card> legalCards(Player player){
+    public List<Card> legalCards(Player player) {
         List<Card> legal = new ArrayList<>();
         for (Card card : player.getHand()) {
             if (table.getPlayedCards().top().getNumber() == card.getNumber() || table.getPlayedCards().top().getSuit() == card.getSuit()) {
@@ -84,32 +84,31 @@ public class Game {
         }
         return legal;
     }
-     /**
-    * Selecciona la carta que se va jugar en cada jugador
-    */
+
+    /**
+     * Selecciona la carta que se va jugar en cada jugador
+     *
+     * @param player
+     * @return
+     */
     public void selectCard(Player player) {
         table.addPlayedCard(player.playCard(iu.askNumCard(legalCards(player))));
-    }
-    /*
-    * Se añade a la mesa la carta que se va a jugar después de seleccionarla
-    */
-    public void playCard (){
-        Table.push(this.player.get(0).remove(selectCards));
+       
     }
 
     /*
     * Se carga una carta del mazo, si no hay cartas se rellena el mazo con las cartas jugadas menos la ultima que se jugo, se barajea el mazo
-    */
-    public Card loadCard(){
-        if(deckOfCard.getNumOfCards()==0){
+     */
+    public Card loadCard() {
+        if (deckOfCard.getNumOfCards() == 0) {
             Card lastCardPlayed = table.getPlayedCards().pop();
-            while(!table.getPlayedCards().isEmpty()){
+            while (!table.getPlayedCards().isEmpty()) {
                 deckOfCard.addCard(table.getPlayedCards().pop());
             }
             table.getPlayedCards().push(lastCardPlayed);
             deckOfCard.shuffleDeck();
         }
-    return deckOfCard.removeCard();
+        return deckOfCard.removeCard();
     }
 
      public boolean endOfGame() {
@@ -123,4 +122,3 @@ public class Game {
         return finPartida;
     }
 }    
-
