@@ -7,37 +7,44 @@ public class Player {
 
     private String name;
     private List<Card> hand;
-    private Card card;
 
     public Player(String name) {
         this.name = name;
         this.hand = new ArrayList<>();
-        this.card = null;
 
     }
-
     public String getName() {
         return name;
     }
-
-//    public List<Card> getHand() {
-//        return this.hand;
-//    }
-
-    public Card getCard() {
-        return card;
+    /*
+    * El jugador quita de su mano y juega una carta 
+    * @param selectedCard
+    * @return devuelve la carta elegida
+     */
+    public Card playCard(Card selectedCard) {
+        return hand.remove(hand.indexOf(selectedCard));
     }
-    
-    
-    public void setCard(Card card) {
-        this.card = card;
+
+    /*
+    * Se verifica si la mano del jugador esta vacia
+    * @return si la mano esta vacia o no
+     */
+    public boolean checkHand() {
+        return hand.isEmpty();
     }
     /*
-    * el jugador escoge un carta de su mano y la juega
-    * @param i
+    * Se crea una lista de cartas legales que se puedan jugar
+    * @param cardOnTable
+    * @return lista de cartas jugables
      */
-    public Card playCard(int i) {
-        return hand.remove(i);
+    public List<Card> legalCards(Card cardOnTable) {
+        List<Card> legal = new ArrayList<>();
+        for (Card c : hand) {
+            if (cardOnTable.getNumber() == c.getNumber() || cardOnTable.getSuit() == c.getSuit()) {
+                legal.addLast(c);
+            }
+        }
+        return legal;
     }
 
     /**
