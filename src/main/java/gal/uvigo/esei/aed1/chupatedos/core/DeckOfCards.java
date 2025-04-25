@@ -6,7 +6,7 @@ import java.util.Stack;
 public class DeckOfCards {
 
     private Stack<Card> deck;
-    private final int NumOfCards = 40;
+    private static final int NumOfCards = 40;
 
 
     public DeckOfCards() {
@@ -16,11 +16,12 @@ public class DeckOfCards {
             deck.push(cards);        
         }
     }
-    
-    public int getNumOfCards() {
-        return this.NumOfCards;
+
+    public static int getNumOfCards() {
+        return NumOfCards;
     }
 
+    
     /**
      * baraja con la instrucción shuffle()
      */
@@ -34,8 +35,7 @@ public class DeckOfCards {
      * @return una carta de la baraja
      */
     public Card removeCard() {
-        Card toret = deck.pop();
-        return toret;
+        return this.deck.pop();
     }
 
     /**
@@ -44,7 +44,7 @@ public class DeckOfCards {
      * @param c
      */
     public void addCard(Card c) {
-        deck.push(c);
+        deck.add(c);
     }
 
     @Override
