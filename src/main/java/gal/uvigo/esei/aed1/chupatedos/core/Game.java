@@ -103,13 +103,10 @@ public class Game {
     }
 
      public boolean endOfGame() {
-        boolean finPartida = false;
-        for (Player player : players) {
-            if (player.getHand().isEmpty()) {
-                finPartida = true;
+            if (player.checkHand().isEmpty()) {
                 iu.showWinner(player);
+                return true;
             }
-        }
-        return finPartida;
+        return false;
     }
 }    
