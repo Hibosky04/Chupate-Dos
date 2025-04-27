@@ -80,23 +80,26 @@ public class Game {
      * Selecciona la carta que se va jugar en cada jugador
      *
      * @param player
+     * @param listOfCards
      * @return
      */
-    public void selectCard(Player player) {
-        table.addPlayedCard(player.playCard(iu.askNumCard(legalCards(player))));
-       
+    public void selectCard(Player player, List<Card> listOfCards) {
+        int numCard = iu.askNumCard(listOfCards);
+        Card cardSelected = listOfCards.get(numCard);
+        table.addPlayedCard(player.playCard(cardSelected));
+        iu.showSelectedCard(player, cardSelected);
     }
 
     /*
     * Se carga una carta del mazo, si no hay cartas se rellena el mazo con las cartas jugadas menos la ultima que se jugo, se barajea el mazo
      */
     public Card loadCard() {
-        if (deckOfCard.getNumOfCards() == 0) {
-            Card lastCardPlayed = table.getPlayedCards().pop();
+        if (deckOfCard.getSize() == 0) {
+            Card lastCardPlayed = table.UpsideCard();
             while (!table.getPlayedCards().isEmpty()) {
-                deckOfCard.addCard(table.getPlayedCards().pop());
+                deckOfCard.addCard(table.removeCard());
             }
-            table.getPlayedCards().push(lastCardPlayed);
+            table.addPlayedCard(lastCardPlayed);
             deckOfCard.shuffleDeck();
         }
         return deckOfCard.removeCard();
