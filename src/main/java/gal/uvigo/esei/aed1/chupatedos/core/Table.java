@@ -53,8 +53,8 @@ public class Table {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.playedCards.top());
-        sb.append("Total card played ").append(size());
+        sb.append("\nUpside Card: ").append(UpsideCard());
+        sb.append("\nTotal cards played: ").append(size());
         return sb.toString();
     }
 
