@@ -75,15 +75,6 @@ public class Game {
     public Card firstCard() {
         return this.deckOfCard.removeCard();
     }
-    public List<Card> legalCards(Player player) {
-        List<Card> legal = new ArrayList<>();
-        for (Card card : player.getHand()) {
-            if (table.getPlayedCards().top().getNumber() == card.getNumber() || table.getPlayedCards().top().getSuit() == card.getSuit()) {
-                legal.add(card);
-            }
-        }
-        return legal;
-    }
 
     /**
      * Selecciona la carta que se va jugar en cada jugador
