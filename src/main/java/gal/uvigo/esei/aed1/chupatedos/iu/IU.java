@@ -114,12 +114,12 @@ public class IU {
      * @param listOfCards
      * @return numero de posicion de la carta que se desea jugar
      */
-    public int askNumCard(List<Card> listOfCards) {
+   public int askNumCard(List<Card> listOfCards) {
         int num = 0;
         do {
-            num = readNumber("\nInsert the number of the card selected is: ");
+            num = readNumber("\nInsert the number of the card selected from 1-"+listOfCards.size()+": ");
         } while (num < 0 || num > listOfCards.size());
-        return num;
+        return num-1;
     }
     
     /**
@@ -142,8 +142,24 @@ public class IU {
      * muestra la carta seleccionada por un jugador
      * @param player 
      */
-    public void showSelectedCard(Player player) {
-        System.out.println(player.getName() + " Your card selected is: " + player.playCard(this.askNumCard(player)));
+    public void showSelectedCard(Player player, Card cardSelected) {
+        System.out.println(player.getName() + " your card selected is: " + cardSelected);
+    }
+
+    /**
+     * Muestra alerta de que el jugador no tiene cartas legales y debe cargarse una carta
+     * @param player 
+     */
+    public void showAlertNoLegalCards(Player player){
+        System.out.println("\n"+player.getName()+" haven't legal cards, must load 1 card");
+    }
+    
+    /**
+     * Muestra alerta de que el jugador no tiene carta legal luego de cargar y pierde el turno
+     * @param player 
+     */
+    public void showAlertLostTurn(Player player){
+        System.out.println("\n"+player.getName()+" don't play a card and loses turn");
     }
     
     /**
@@ -151,8 +167,8 @@ public class IU {
      * @param name 
      */
 
-    public void showPlayerTurn(String name) {
-        System.out.println("\nThe turn is: " + name);
+    public void showPlayerTurn(Player player) {
+        System.out.println("\nTurn of: " + player.getName());
     }
     /**
      *
@@ -161,6 +177,7 @@ public class IU {
      */
     
     public void showLegalCards(List<Card> legalCards){
+        System.out.println("\nLegal Cards:");
         for(Card c : legalCards){
             System.out.println(c);
         }
