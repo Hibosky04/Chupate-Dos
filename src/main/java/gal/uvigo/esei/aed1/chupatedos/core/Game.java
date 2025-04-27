@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Game {
 
@@ -14,7 +16,7 @@ public class Game {
     private List<Player> players;
 
 
-    public Game(IU iu) {
+    public Game(IU iu, int numOfPlayers) {
         this.iu = iu;
         this.deckOfCard = new DeckOfCards();
         this.players = new ArrayList<>();
@@ -30,23 +32,28 @@ public class Game {
         deckOfCard.shuffleDeck();
         collectCard();
         table.addPlayedCard(firstCard());
-        iu.showPlayers(players);
         iu.showTable(table);
-        while(!endOfGame()) {
-            for (int i = 0; i < players.size(); i++) {
-                iu.showPlayerTurn(players.get(i).getName());
-                iu.showPlayer(players.get(i));
-                if (!legalCards(players.get(i)).isEmpty()) {
-                    iu.showLegalCards(legalCards(players.get(i)));
-                    selectCard(players.get(i));
+        Queue<Player> turns = null;
+        for(Player p : players){
+            turns.add(p);
+        }
+        
+        do {
+            turns.add(turns.remove());
+                iu.showPlayerTurn(turns.element());
+                iu.showPlayer(turns.element());
+                if (!turns.element().legalCards(table.UpsideCard()).isEmpty()) {
+                    iu.showLegalCards(turns.element().legalCards(table.UpsideCard()));
+                    selectCard(turns.element(), turns.element().legalCards(table.UpsideCard()));
                     iu.showTable(table);
                 } else {
-                    players.get(i).collectCard(loadCard());
+                    turns.element().collectCard(loadCard());
                 }
-
-            }
-        } 
+                
+        }while(!endOfGame(turns.element())); 
+        iu.showWinner(turns.element());
     }
+   
 
     /**
      * Crea los jugadores
@@ -89,7 +96,6 @@ public class Game {
         table.addPlayedCard(player.playCard(cardSelected));
         iu.showSelectedCard(player, cardSelected);
     }
-
     /*
     * Se carga una carta del mazo, si no hay cartas se rellena el mazo con las cartas jugadas menos la ultima que se jugo, se barajea el mazo
      */
@@ -104,12 +110,23 @@ public class Game {
         }
         return deckOfCard.removeCard();
     }
-
-     public boolean endOfGame() {
-            if (player.checkHand().isEmpty()) {
-                iu.showWinner(player);
-                return true;
-            }
-        return false;
+    public boolean endOfGame(Player p){
+        if(p.checkHand()){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
     }
-}    
+    
+    public void reverseTurns(Queue<Player> t){
+        Stack<Player> temp = null;
+        while(t.isEmpty()){
+            temp.push(t.remove());
+        }
+        while(temp.isEmpty()){
+            t.add(temp.pop());
+        }
+    }
+}   
