@@ -44,7 +44,7 @@ public class Game {
                 endGame = this.endOfGame(playerTurn);
                 playerTurn = this.nextPlayer(playerTurn);
             } else {
-                iu.showAlertNoLegalCard(playerTurn);
+                iu.showAlertNoLegalCards(playerTurn);
                 playerTurn.collectCard(this.loadCard());
                 if (!playerTurn.legalCards(table.UpsideCard()).isEmpty()) {
                     iu.showPlayer(playerTurn);
