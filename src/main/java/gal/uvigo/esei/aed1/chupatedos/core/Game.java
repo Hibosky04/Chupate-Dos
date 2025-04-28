@@ -16,7 +16,7 @@ public class Game {
     private List<Player> players;
 
 
-    public Game(IU iu, int numOfPlayers) {
+    public Game(IU iu) {
         this.iu = iu;
         this.deckOfCard = new DeckOfCards();
         this.players = new ArrayList<>();
