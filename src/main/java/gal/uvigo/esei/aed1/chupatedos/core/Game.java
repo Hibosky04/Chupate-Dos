@@ -32,26 +32,33 @@ public class Game {
         deckOfCard.shuffleDeck();
         collectCard();
         table.addPlayedCard(firstCard());
-        iu.showTable(table);
-        Queue<Player> turns = null;
-        for(Player p : players){
-            turns.add(p);
-        }
-        
+        Player playerTurn = players.get(0);
+        boolean endGame = false;
         do {
-            turns.add(turns.remove());
-                iu.showPlayerTurn(turns.element());
-                iu.showPlayer(turns.element());
-                if (!turns.element().legalCards(table.UpsideCard()).isEmpty()) {
-                    iu.showLegalCards(turns.element().legalCards(table.UpsideCard()));
-                    selectCard(turns.element(), turns.element().legalCards(table.UpsideCard()));
-                    iu.showTable(table);
-                } else {
-                    turns.element().collectCard(loadCard());
+            iu.showTable(table);
+            iu.showPlayerTurn(playerTurn);
+            if (!playerTurn.legalCards(table.UpsideCard()).isEmpty()) {
+                iu.showPlayer(playerTurn);
+                iu.showLegalCards(playerTurn.legalCards(table.UpsideCard()));
+                this.selectCard(playerTurn, playerTurn.legalCards(table.UpsideCard()));
+                endGame = this.endOfGame(playerTurn);
+                playerTurn = this.nextPlayer(playerTurn);
+            } else {
+                iu.showAlertNoLegalCard(playerTurn);
+                playerTurn.collectCard(this.loadCard());
+                if (!playerTurn.legalCards(table.UpsideCard()).isEmpty()) {
+                    iu.showPlayer(playerTurn);
+                    iu.showLegalCards(playerTurn.legalCards(table.UpsideCard()));
+                    this.selectCard(playerTurn, playerTurn.legalCards(table.UpsideCard()));
+                    endGame = this.endOfGame(playerTurn);
+                    playerTurn = this.nextPlayer(playerTurn);
                 }
-                
-        }while(!endOfGame(turns.element())); 
-        iu.showWinner(turns.element());
+                else{
+                    iu.showAlertLostTurn(playerTurn);
+                    playerTurn = this.nextPlayer(playerTurn);
+                }
+            }
+        }while(!this.endOfGame(playerTurn)); 
     }
    
 
@@ -110,23 +117,20 @@ public class Game {
         }
         return deckOfCard.removeCard();
     }
-    public boolean endOfGame(Player p){
-        if(p.checkHand()){
+
+     public Player nextPlayer(Player player) {
+        if (player.equals(players.getLast())) {
+            return players.getFirst();
+        }
+        return players.get(players.indexOf(player) + 1);
+    }
+
+    public boolean endOfGame(Player player) {
+        if (player.checkHand()) {
+            iu.showWinner(player);
             return true;
         }
-        else{
-            return false;
-        }
-        
+        return false;
     }
     
-    public void reverseTurns(Queue<Player> t){
-        Stack<Player> temp = null;
-        while(t.isEmpty()){
-            temp.push(t.remove());
-        }
-        while(temp.isEmpty()){
-            t.add(temp.pop());
-        }
-    }
 }   
