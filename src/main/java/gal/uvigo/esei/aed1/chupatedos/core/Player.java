@@ -60,7 +60,6 @@ public class Player {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(name);
         sb.append("\nHand:").append(this.hand);
         sb.append('\n');
         return sb.toString();
