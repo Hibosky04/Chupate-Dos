@@ -46,8 +46,8 @@ public class Table {
      * Elimina una carta de la pila de las ya jugadas
      */
     
-    public void removeCard(){
-        playedCards.pop();
+    public Card removeCard(){
+        return playedCards.pop();
     }
 
     @Override
