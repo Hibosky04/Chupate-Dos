@@ -58,7 +58,7 @@ public class Game {
                     playerTurn = this.nextPlayer(playerTurn);
                 }
             }
-        }while(!this.endOfGame(playerTurn)); 
+        }while(!endGame); 
     }
    
 
