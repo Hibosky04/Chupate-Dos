@@ -3,9 +3,7 @@ package gal.uvigo.esei.aed1.chupatedos.core;
 import gal.uvigo.esei.aed1.chupatedos.iu.IU;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Queue;
 import java.util.Stack;
 
 public class Game {
@@ -100,7 +98,8 @@ public class Game {
     public void selectCard(Player player, List<Card> listOfCards) {
         int numCard = iu.askNumCard(listOfCards);
         Card cardSelected = listOfCards.get(numCard);
-        table.addPlayedCard(player.playCard(cardSelected));
+        player.playCard(cardSelected);
+        table.addPlayedCard(cardSelected);
         iu.showSelectedCard(player, cardSelected);
     }
     /*
@@ -108,11 +107,11 @@ public class Game {
      */
     public Card loadCard() {
         if (deckOfCard.getSize() == 0) {
-            Card lastCardPlayed = table.UpsideCard();
-            while (!table.getPlayedCards().isEmpty()) {
-                deckOfCard.addCard(table.removeCard());
+            Stack<Card> stack = new Stack<>();
+            stack.addAll(table.playedCardMinusFirstPlayed());
+            while (!stack.isEmpty()) {
+                deckOfCard.addCard(stack.pop());
             }
-            table.addPlayedCard(lastCardPlayed);
             deckOfCard.shuffleDeck();
         }
         return deckOfCard.removeCard();
