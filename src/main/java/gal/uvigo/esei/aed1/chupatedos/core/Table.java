@@ -17,7 +17,7 @@ public class Table {
      * Devuelve una lista de las cartas jugadas menos la que esta en juego
      * @return 
      */
-    public List<Card> playedCardMinusFirstPlayed(){
+    public List<Card> playedCardsMinusTopPlayed{
         List<Card> list = new ArrayList<>();
         Card upsideCard = playedCards.firstElement();
         while(!playedCards.isEmpty()){
@@ -48,7 +48,7 @@ public class Table {
     * @return muestra la primera carta de la pila
     */
     
-    public Card UpsideCard(){
+    public Card upsideCard(){
         return playedCards.peek();
     }
     
@@ -63,7 +63,7 @@ public class Table {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\nUpside Card: ").append(UpsideCard());
+        sb.append("\nUpside Card: ").append(upsideCard());
         sb.append("\nTotal cards played: ").append(size());
         return sb.toString();
     }
