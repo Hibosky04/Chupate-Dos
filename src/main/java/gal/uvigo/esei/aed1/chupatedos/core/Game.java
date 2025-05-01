@@ -35,19 +35,19 @@ public class Game {
         do {
             iu.showTable(table);
             iu.showPlayerTurn(playerTurn);
-            if (!playerTurn.legalCards(table.UpsideCard()).isEmpty()) {
+            if (!playerTurn.legalCards(table.upsideCard()).isEmpty()) {
                 iu.showPlayer(playerTurn);
-                iu.showLegalCards(playerTurn.legalCards(table.UpsideCard()));
-                this.selectCard(playerTurn, playerTurn.legalCards(table.UpsideCard()));
+                iu.showLegalCards(playerTurn.legalCards(table.upsideCard()));
+                this.selectCard(playerTurn, playerTurn.legalCards(table.upsideCard()));
                 endGame = this.endOfGame(playerTurn);
                 playerTurn = this.nextPlayer(playerTurn);
             } else {
                 iu.showAlertNoLegalCards(playerTurn);
                 playerTurn.collectCard(this.loadCard());
-                if (!playerTurn.legalCards(table.UpsideCard()).isEmpty()) {
+                if (!playerTurn.legalCards(table.upsideCard()).isEmpty()) {
                     iu.showPlayer(playerTurn);
-                    iu.showLegalCards(playerTurn.legalCards(table.UpsideCard()));
-                    this.selectCard(playerTurn, playerTurn.legalCards(table.UpsideCard()));
+                    iu.showLegalCards(playerTurn.legalCards(table.upsideCard()));
+                    this.selectCard(playerTurn, playerTurn.legalCards(table.upsideCard()));
                     endGame = this.endOfGame(playerTurn);
                     playerTurn = this.nextPlayer(playerTurn);
                 }
@@ -108,7 +108,7 @@ public class Game {
     public Card loadCard() {
         if (deckOfCard.getSize() == 0) {
             Stack<Card> stack = new Stack<>();
-            stack.addAll(table.playedCardMinusFirstPlayed());
+            stack.addAll(table.playedCardsMinusTopPlayed());
             while (!stack.isEmpty()) {
                 deckOfCard.addCard(stack.pop());
             }
