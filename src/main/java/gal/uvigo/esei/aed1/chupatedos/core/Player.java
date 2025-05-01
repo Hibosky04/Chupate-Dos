@@ -19,10 +19,10 @@ public class Player {
     /*
     * El jugador quita de su mano y juega una carta 
     * @param selectedCard
-    * @return devuelve la carta elegida
+    * 
      */
-    public Card playCard(Card selectedCard) {
-        return hand.remove(hand.indexOf(selectedCard));
+    public void playCard(Card selectedCard) {
+        hand.remove(selectedCard);
     }
 
     /*
