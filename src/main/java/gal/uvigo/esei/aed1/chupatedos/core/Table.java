@@ -1,22 +1,32 @@
 package gal.uvigo.esei.aed1.chupatedos.core;
 
-import es.uvigo.esei.aed1.tads.stack.LinkedStack;
-import es.uvigo.esei.aed1.tads.stack.Stack;
+
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Stack;
 
 public class Table {
     
     private Stack<Card> playedCards;
     
     public Table() {
-        this.playedCards = new LinkedStack<>();
+        this.playedCards = new Stack<>();
+    }
+    
+    /**
+     * Devuelve una lista de las cartas jugadas menos la que esta en juego
+     * @return 
+     */
+    public List<Card> playedCardMinusFirstPlayed(){
+        List<Card> list = new ArrayList<>();
+        Card upsideCard = playedCards.firstElement();
+        while(!playedCards.isEmpty()){
+            list.addLast(removeCard());
+        }
+        playedCards.add(upsideCard);
+        return list;
     }
 
-    public Stack<Card> getPlayedCards() {
-        return playedCards;
-    }
     /**
     * Agrega una carta a la mesa
     * 
@@ -39,7 +49,7 @@ public class Table {
     */
     
     public Card UpsideCard(){
-        return playedCards.top();
+        return playedCards.peek();
     }
     
     /**
