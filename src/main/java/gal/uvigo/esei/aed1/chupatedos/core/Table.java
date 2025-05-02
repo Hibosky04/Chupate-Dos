@@ -1,32 +1,22 @@
 package gal.uvigo.esei.aed1.chupatedos.core;
 
-
+import es.uvigo.esei.aed1.tads.stack.LinkedStack;
+import es.uvigo.esei.aed1.tads.stack.Stack;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
+
 
 public class Table {
     
     private Stack<Card> playedCards;
     
     public Table() {
-        this.playedCards = new Stack<>();
-    }
-    
-    /**
-     * Devuelve una lista de las cartas jugadas menos la que esta en juego
-     * @return 
-     */
-    public List<Card> playedCardsMinusTopPlayed{
-        List<Card> list = new ArrayList<>();
-        Card upsideCard = playedCards.firstElement();
-        while(!playedCards.isEmpty()){
-            list.addLast(removeCard());
-        }
-        playedCards.add(upsideCard);
-        return list;
+        this.playedCards = new LinkedStack<>();
     }
 
+    public Stack<Card> getPlayedCards() {
+        return playedCards;
+    }
     /**
     * Agrega una carta a la mesa
     * 
@@ -48,8 +38,8 @@ public class Table {
     * @return muestra la primera carta de la pila
     */
     
-    public Card upsideCard(){
-        return playedCards.peek();
+    public Card UpsideCard(){
+        return playedCards.top();
     }
     
     /**
@@ -59,11 +49,18 @@ public class Table {
     public Card removeCard(){
         return playedCards.pop();
     }
-
+    /**
+     * Comprueba el numero de la ultima carta jugada
+     * @return numero de la carta en top de table
+     */
+    public int checkSpecial(){
+        return UpsideCard().getNumber();
+    }
+        
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\nUpside Card: ").append(upsideCard());
+        sb.append("\nUpside Card: ").append(UpsideCard());
         sb.append("\nTotal cards played: ").append(size());
         return sb.toString();
     }
