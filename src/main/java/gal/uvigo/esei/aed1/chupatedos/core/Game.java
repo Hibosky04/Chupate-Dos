@@ -38,19 +38,19 @@ public class Game {
         do {
             iu.showTable(table);
             iu.showPlayerTurn(playerTurn);
-            if (!playerTurn.legalCards(table.UpsideCard()).isEmpty()) {
+            if (!playerTurn.legalCards(table.upsideCard()).isEmpty()) {
                 iu.showPlayer(playerTurn);
-                iu.showLegalCards(playerTurn.legalCards(table.UpsideCard()));
-                this.selectCard(playerTurn, playerTurn.legalCards(table.UpsideCard()));
+                iu.showLegalCards(playerTurn.legalCards(table.upsideCard()));
+                this.selectCard(playerTurn, playerTurn.legalCards(table.upsideCard()));
                 checkCard();
                 endGame = this.endOfGame(playerTurn);
             } else {
                 iu.showAlertNoLegalCards(playerTurn);
                 playerTurn.collectCard(this.loadCard());
-                if (!playerTurn.legalCards(table.UpsideCard()).isEmpty()) {
+                if (!playerTurn.legalCards(table.upsideCard()).isEmpty()) {
                     iu.showPlayer(playerTurn);
-                    iu.showLegalCards(playerTurn.legalCards(table.UpsideCard()));
-                    this.selectCard(playerTurn, playerTurn.legalCards(table.UpsideCard()));
+                    iu.showLegalCards(playerTurn.legalCards(table.upsideCard()));
+                    this.selectCard(playerTurn, playerTurn.legalCards(table.upsideCard()));
                     checkCard();
                 }
                 else{
@@ -107,18 +107,18 @@ public class Game {
     /*
     * Se carga una carta del mazo, si no hay cartas se rellena el mazo con las cartas jugadas menos la ultima que se jugo, se barajea el mazo
      */
-    public Card loadCard() {
+  public Card loadCard() {
         if (deckOfCard.getSize() == 0) {
-            Card lastCardPlayed = table.UpsideCard();
-            while (!table.getPlayedCards().isEmpty()) {
-                deckOfCard.addCard(table.removeCard());
+            Stack<Card> stack = new Stack<>();;
+            stack.addAll(table.playedCardMinusTopPlayed());
+            while (!stack.isEmpty()) {
+                deckOfCard.addCard(stack.pop());
             }
-            table.addPlayedCard(lastCardPlayed);
             deckOfCard.shuffleDeck();
         }
         return deckOfCard.removeCard();
     }
-
+  
      public Player nextPlayer(Player player) {
         if (player.equals(players.getLast())) {
             return players.getFirst();
@@ -133,7 +133,7 @@ public class Game {
         }
         return false;
     }
-    /*
+      /*
     *comprueba si se jugó una carta especial.
     */
     public void checkCard(){
@@ -149,7 +149,7 @@ public class Game {
        
     }
     /*
-    * el jugador siguiente roba 2 y pierde turno
+    * se avanza el turno y el jugador roba 2 cartas
     */
     public void drawTwo(){
         playerTurn=nextPlayer(playerTurn);
