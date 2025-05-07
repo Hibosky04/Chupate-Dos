@@ -1,13 +1,12 @@
 package gal.uvigo.esei.aed1.chupatedos.core;
 
-import es.uvigo.esei.aed1.tads.stack.LinkedStack;
-import es.uvigo.esei.aed1.tads.stack.Stack;
 import gal.uvigo.esei.aed1.chupatedos.iu.IU;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Queue;
+import java.util.Stack;
+import java.util.LinkedList;
 
 public class Game {
 
@@ -15,11 +14,12 @@ public class Game {
     private DeckOfCards deckOfCard;
     private Table table;
     private List<Player> players;
+    private Player playerTurn;
 
     public Game(IU iu) {
         this.iu = iu;
         this.deckOfCard = new DeckOfCards();
-        this.players = new ArrayList<>();
+        this.players = new LinkedList<>();
         this.table = new Table();
 
     }
@@ -29,10 +29,11 @@ public class Game {
      */
     public void play() {
         createPlayer();
+        playerTurn=players.get(0);
         deckOfCard.shuffleDeck();
         collectCard();
         table.addPlayedCard(firstCard());
-        Player playerTurn = players.get(0);
+        checkCard();
         boolean endGame = false;
         do {
             iu.showTable(table);
@@ -41,30 +42,26 @@ public class Game {
                 iu.showPlayer(playerTurn);
                 iu.showLegalCards(playerTurn.legalCards(table.UpsideCard()));
                 this.selectCard(playerTurn, playerTurn.legalCards(table.UpsideCard()));
-                if (table.UpsideCard().getNumber() == 7){
-                    this.reverseTurns(players);
-                }
+                checkCard();
                 endGame = this.endOfGame(playerTurn);
-                playerTurn = this.nextPlayer(playerTurn);
             } else {
-                iu.showAlertNoLegalCard(playerTurn);
+                iu.showAlertNoLegalCards(playerTurn);
                 playerTurn.collectCard(this.loadCard());
                 if (!playerTurn.legalCards(table.UpsideCard()).isEmpty()) {
                     iu.showPlayer(playerTurn);
                     iu.showLegalCards(playerTurn.legalCards(table.UpsideCard()));
                     this.selectCard(playerTurn, playerTurn.legalCards(table.UpsideCard()));
-                    if (table.UpsideCard().getNumber() == 7){
-                    this.reverseTurns(players);
+                    checkCard();
                 }
-                    endGame = this.endOfGame(playerTurn);
-                    playerTurn = this.nextPlayer(playerTurn);
-                } else {
+                else{
                     iu.showAlertLostTurn(playerTurn);
-                    playerTurn = this.nextPlayer(playerTurn);
                 }
             }
-        } while (!endGame);
+            
+            playerTurn=nextPlayer(playerTurn);
+        }while(!endGame); 
     }
+   
 
     /**
      * Crea los jugadores
@@ -73,21 +70,21 @@ public class Game {
         for (String s : iu.askPlayersName()) {
             this.players.add(new Player(s));
         }
-
+        
     }
 
-   /**
-    * Reparte siete cartas a cada jugador al inicio de cada ronda
-    */
+    /**
+     * Reparte siete cartas a cada jugador al inicio de cada ronda
+     */
     public void collectCard() {
-        for (int i = 0; i < 7; i++) {
+        for (int i=0; i<7; i++){
             for (Player player : players) {
                 player.collectCard(deckOfCard.removeCard());
             }
         }
     }
 
-    /**
+    /** 
      * @return la carta de la mesa
      */
     public Card firstCard() {
@@ -107,12 +104,8 @@ public class Game {
         table.addPlayedCard(player.playCard(cardSelected));
         iu.showSelectedCard(player, cardSelected);
     }
-
-    /**
-     * Se carga una carta del mazo, si no hay cartas se rellena el mazo con las
-     * cartas jugadas menos la ultima que se jugo, se barajea el mazo
-     * 
-     * @return
+    /*
+    * Se carga una carta del mazo, si no hay cartas se rellena el mazo con las cartas jugadas menos la ultima que se jugo, se barajea el mazo
      */
     public Card loadCard() {
         if (deckOfCard.getSize() == 0) {
@@ -126,22 +119,50 @@ public class Game {
         return deckOfCard.removeCard();
     }
 
-    /**
-     *
-     * @param player
-     * @return
-     */
-    public Player nextPlayer(Player player) {
+     public Player nextPlayer(Player player) {
         if (player.equals(players.getLast())) {
             return players.getFirst();
         }
         return players.get(players.indexOf(player) + 1);
     }
+
+    public boolean endOfGame(Player player) {
+        if (player.checkHand()) {
+            iu.showWinner(player);
+            return true;
+        }
+        return false;
+    }
+    /*
+    *comprueba si se jugó una carta especial.
+    */
+    public void checkCard(){
+       if(table.checkSpecial()==2){
+           drawTwo();
+           iu.displayMessage("Player " + playerTurn.getName()+" draws two and losses turn");
+
+       }
+       if(table.checkSpecial()==7){
+           players = reverseTurns(players);
+           iu.displayMessage("Turns have been inverted");
+       }
+       
+    }
+    /*
+    * el jugador siguiente roba 2 y pierde turno
+    */
+    public void drawTwo(){
+        playerTurn=nextPlayer(playerTurn);
+        for(int i = 0; i<2;i++){
+        playerTurn.collectCard(this.loadCard());
+        }
+    }
+           
     /*
     * invierte el orden de los turnos
     */
     public List<Player> reverseTurns(List<Player> players){
-         Stack<Player> temp = new LinkedStack<>();
+            Stack<Player> temp = new Stack<>();
             for(int i=0;i<players.size();i++){
                 temp.push(players.get(i));
             }
@@ -150,20 +171,5 @@ public class Game {
                 players.addLast(temp.pop());
             }
             return players ;
-    }
-    
-    /**
-     *
-     * @param player
-     * @return verdadero si el jugador tiene la mano vacia y se acaba el juego y
-     * si fuera falso que siga el juego
-     */
-    public boolean endOfGame(Player player) {
-        if (player.checkHand()) {
-            iu.showWinner(player);
-            return true;
-        }
-        return false;
-    }
+    }  
 }
-
