@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class Table {
     
     private Stack<Card> playedCards;
@@ -18,11 +17,11 @@ public class Table {
     public Stack<Card> getPlayedCards() {
         return playedCards;
     }
-    
     /**
     * Agrega una carta a la mesa
     * 
     */
+    
     public void addPlayedCard(Card card){
         this.playedCards.push(card);
     }
@@ -34,11 +33,11 @@ public class Table {
     public int size(){
         return this.playedCards.size();
     }
-    
     /**
     *  Carta en juego
     * @return muestra la primera carta de la pila
     */
+    
     public Card UpsideCard(){
         return playedCards.top();
     }
@@ -46,15 +45,23 @@ public class Table {
     /**
      * Elimina una carta de la pila de las ya jugadas
      */
-    public void removeCard(){
-        playedCards.pop();
+    
+    public Card removeCard(){
+        return playedCards.pop();
     }
-
+    /**
+     * Comprueba el numero de la ultima carta jugada
+     * @return numero de la carta en top de table
+     */
+    public int checkSpecial(){
+        return UpsideCard().getNumber();
+    }
+        
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.playedCards.top());
-        sb.append("Total card played ").append(size());
+        sb.append("\nUpside Card: ").append(UpsideCard());
+        sb.append("\nTotal cards played: ").append(size());
         return sb.toString();
     }
 
