@@ -123,15 +123,7 @@ public class IU {
         return num;
     }
 
-    /**
-     * Muestra las cartas seleccionadas por los jugadores
-     *
-     * @param list
-     */
-    public void showSelectedCards(List<Card> list) {
-        System.out.println(list);
-
-    }
+    
 
     /**
      * Muestra las cartas que hay en la mesa
@@ -142,24 +134,8 @@ public class IU {
         System.out.println(table);
     }
 
-    /**
-     * muestra la carta seleccionada por un jugador
-     *
-     * @param player
-     */
-    public void showSelectedCard(Player player, List<Card>legalCards) {
-        Card selectedCard = player.playCard(askNumCard(legalCards));
-        System.out.println(player.getName() + " played: " + selectedCard);
-    }
     
-        /**
-         * Muestra de que jugador es el turno
-         *
-         * @param name
-         */
-    public void showPlayerTurn(String name) {
-        System.out.println("The turn is: " + name);
-    }
+      
 
     /**
      *
@@ -173,12 +149,6 @@ public class IU {
         }
     }
 
-    /*
-    * Muestra el ganador
-    *
-     */
-    public void showWinner(Player player) {
-        System.out.println("\nThe winner is: " + player.getName());
-    }
+   
 
 }
