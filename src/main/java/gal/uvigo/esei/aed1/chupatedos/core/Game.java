@@ -1,9 +1,6 @@
 package gal.uvigo.esei.aed1.chupatedos.core;
 
 import gal.uvigo.esei.aed1.chupatedos.iu.IU;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 import java.util.LinkedList;
@@ -37,7 +34,7 @@ public class Game {
         boolean endGame = false;
         do {
             iu.showTable(table);
-            iu.showPlayerTurn(playerTurn);
+            iu.displayMessage("\nTurn of: " + playerTurn.getName());
             if (!playerTurn.legalCards(table.upsideCard()).isEmpty()) {
                 iu.showPlayer(playerTurn);
                 iu.showLegalCards(playerTurn.legalCards(table.upsideCard()));
@@ -45,7 +42,7 @@ public class Game {
                 checkCard();
                 endGame = this.endOfGame(playerTurn);
             } else {
-                iu.showAlertNoLegalCards(playerTurn);
+               iu.displayMessage("\n" + playerTurn.getName() + " doesn't have legal cards, must collect card");
                 playerTurn.collectCard(this.loadCard());
                 if (!playerTurn.legalCards(table.upsideCard()).isEmpty()) {
                     iu.showPlayer(playerTurn);
@@ -54,7 +51,7 @@ public class Game {
                     checkCard();
                 }
                 else{
-                    iu.showAlertLostTurn(playerTurn);
+                    iu.displayMessage("\n" + playerTurn.getName() + " don't play a card and loses turn");
                 }
             }
             
@@ -102,7 +99,7 @@ public class Game {
         int numCard = iu.askNumCard(listOfCards);
         Card cardSelected = listOfCards.get(numCard);
         table.addPlayedCard(player.playCard(cardSelected));
-        iu.showSelectedCard(player, cardSelected);
+        iu.displayMessage(player.getName() + " played: " + cardSelected);
     }
     /*
     * Se carga una carta del mazo, si no hay cartas se rellena el mazo con las cartas jugadas menos la ultima que se jugo, se barajea el mazo
@@ -126,9 +123,10 @@ public class Game {
         return players.get(players.indexOf(player) + 1);
     }
 
+
     public boolean endOfGame(Player player) {
         if (player.checkHand()) {
-            iu.showWinner(player);
+            iu.displayMessage("\nThe winner is: " + player.getName());
             return true;
         }
         return false;
