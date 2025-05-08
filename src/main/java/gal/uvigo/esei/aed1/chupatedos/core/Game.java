@@ -106,7 +106,7 @@ public class Game {
      */
   public Card loadCard() {
         if (deckOfCard.getSize() == 0) {
-            Stack<Card> stack = new Stack<>();;
+            Stack<Card> stack = new Stack<>();
             stack.addAll(table.playedCardMinusTopPlayed());
             while (!stack.isEmpty()) {
                 deckOfCard.addCard(stack.pop());
