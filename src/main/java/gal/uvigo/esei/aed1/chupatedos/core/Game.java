@@ -131,17 +131,15 @@ public class Game {
         }
         return false;
     }
-      /*
-    *comprueba si se jugó una carta especial.
-    */
-    public void checkCard(){
+    
+public void checkCard(){
        if(table.checkSpecial()==2){
            drawTwo();
            iu.displayMessage("Player " + playerTurn.getName()+" draws two and losses turn");
 
        }
        if(table.checkSpecial()==7){
-           players = reverseTurns(players);
+           reverseTurns();
            iu.displayMessage("Turns have been inverted");
        }
        
@@ -159,7 +157,7 @@ public class Game {
     /*
     * invierte el orden de los turnos
     */
-    public List<Player> reverseTurns(List<Player> players){
+    public void reverseTurns(){
             Stack<Player> temp = new Stack<>();
             for(int i=0;i<players.size();i++){
                 temp.push(players.get(i));
@@ -168,6 +166,6 @@ public class Game {
             while(!temp.isEmpty()){
                 players.addLast(temp.pop());
             }
-            return players ;
+            
     }  
 }
