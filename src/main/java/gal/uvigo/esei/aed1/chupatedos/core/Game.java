@@ -30,38 +30,33 @@ public class Game {
      */
     public void play() {
         createPlayer();
+        playerTurn=players.get(0);
         deckOfCard.shuffleDeck();
         collectCard();
         table.addPlayedCard(firstCard());
-        checkSpecialCard();
-        Player playerTurn = players.get(0);
+        checkCard();
         boolean endGame = false;
         do {
+            Card topCard = table.UpsideCard();
             iu.showTable(table);
-            iu.displayMessage("\nTurn of: " + playerTurn.getName());
-            if (!playerTurn.legalCards(table.UpsideCard()).isEmpty()) {
-                iu.showPlayer(playerTurn);
-                iu.showLegalCards(playerTurn.legalCards(table.UpsideCard()));
-                this.selectCard(playerTurn, playerTurn.legalCards(table.UpsideCard()));
-                checkSpecialCard();
-                endGame = this.endOfGame(playerTurn);
-                playerTurn = this.nextPlayer(playerTurn);
-            } else {
-                iu.displayMessage("\n" + playerTurn.getName() + " doesn't have legal cards, must collect card");
+            iu.showPlayerTurn(playerTurn);
+            if (playerTurn.legalCards(topCard).isEmpty()) {
+                iu.showAlertNoLegalCards(playerTurn);
                 playerTurn.collectCard(this.loadCard());
-                if (!playerTurn.legalCards(table.UpsideCard()).isEmpty()) {
-                    iu.showPlayer(playerTurn);
-                    iu.showLegalCards(playerTurn.legalCards(table.UpsideCard()));
-                    this.selectCard(playerTurn, playerTurn.legalCards(table.UpsideCard()));
-                    checkSpecialCard();
-                    endGame = this.endOfGame(playerTurn);
-                    playerTurn = this.nextPlayer(playerTurn);
-                } else {
-                    iu.displayMessage("\n" + playerTurn.getName() + " don't play a card and loses turn");
-                }
             }
-            playerTurn = this.nextPlayer(playerTurn);
+            if (!playerTurn.legalCards(topCard).isEmpty()) {
+                iu.showPlayer(playerTurn);
+                iu.showLegalCards(playerTurn.legalCards(topCard));
+                this.selectCard(playerTurn, playerTurn.legalCards(topCard));
+                checkCard();
+                endGame = this.endOfGame(playerTurn);
+            } else {
+                iu.showAlertLostTurn(playerTurn);
+            }
+
+            playerTurn = nextPlayer(playerTurn);
         } while (!endGame);
+        
     }
 
     /**
