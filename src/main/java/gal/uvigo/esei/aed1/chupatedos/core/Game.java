@@ -135,7 +135,9 @@ public class Game {
         return players.get(players.indexOf(player) + 1);
     }
     /**
-     * 
+     * se mira que la carta en la mesa es igual a siete o dos
+     * si la carta es igual a 7 llama al método reverseTurns
+     * y si la carta es 2 llama al método drawTwo
      */
     public void checkSpecialCard(){
          if (table.UpsideCard().getNumber() == 7) {
@@ -145,9 +147,7 @@ public class Game {
             this.drawTwo();
         }
     }
-/**
- * 
- */
+    
     public void drawTwo() {
     Player nextPlayer = nextPlayer(playerTurn);
     
@@ -162,7 +162,8 @@ public class Game {
 }
   
 /**
- * 
+ * invierte el orden de los turnos usando una pila para reordenar la lista de jugadores, 
+ * lo que cambia la dirección del juego cuando se juega una carta especial (7)
  */
     public void reverseTurns() {
         Stack<Player> temp = new LinkedStack<>();
