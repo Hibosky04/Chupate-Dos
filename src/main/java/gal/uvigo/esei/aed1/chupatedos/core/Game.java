@@ -34,7 +34,7 @@ public class Game {
         deckOfCard.shuffleDeck();
         collectCard();
         table.addPlayedCard(firstCard());
-        checkCard();
+        checkSpecialCard();
         boolean endGame = false;
         do {
             Card topCard = table.UpsideCard();
@@ -48,7 +48,7 @@ public class Game {
                 iu.showPlayer(playerTurn);
                 iu.showLegalCards(playerTurn.legalCards(topCard));
                 this.selectCard(playerTurn, playerTurn.legalCards(topCard));
-                checkCard();
+                checkSpecialCard();
                 endGame = this.endOfGame(playerTurn);
             } else {
                 iu.showAlertLostTurn(playerTurn);
@@ -142,18 +142,16 @@ public class Game {
             this.drawTwo();
         }
     }
-    
+/**
+ *  El jugador siguiente roba 2 cartas
+ *  y pasamos el turno al siguiente jugador (saltando al que perdió el turno)
+ */
     public void drawTwo() {
-    Player nextPlayer = nextPlayer(playerTurn);
-    
-    // El jugador siguiente roba 2 cartas
     for(int i = 0; i < 2; i++ ){
-        nextPlayer.collectCard(loadCard());
+        playerTurn.collectCard(loadCard());
     }
-    iu.displayMessage(nextPlayer.getName() + " has to draw 2 cards and loses their turn!");
-    
-    // Pasamos el turno al siguiente jugador (saltando al que perdió el turno)
-    playerTurn = nextPlayer(nextPlayer);
+    iu.displayMessage(playerTurn.getName() + " has to draw 2 cards and loses their turn!");
+    playerTurn = nextPlayer(playerTurn);
 }
   
 /**
