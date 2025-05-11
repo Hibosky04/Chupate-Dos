@@ -59,13 +59,7 @@ public class Table {
     public Card removeCard(){
         return playedCards.pop();
     }
-    /**
-     * Comprueba el numero de la ultima carta jugada
-     * @return numero de la carta en top de table
-     */
-    public int checkSpecial(){
-        return upsideCard().getNumber();
-    }
+   
         
     @Override
     public String toString() {
