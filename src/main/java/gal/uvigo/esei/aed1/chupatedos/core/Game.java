@@ -115,7 +115,12 @@ public class Game {
         }
         return deckOfCard.removeCard();
     }
-  
+
+    /**
+     *
+     * @param player
+     * @return el player sigiente 
+     */
      public Player nextPlayer(Player player) {
         if (player.equals(players.getLast())) {
             return players.getFirst();
@@ -123,7 +128,11 @@ public class Game {
         return players.get(players.indexOf(player) + 1);
     }
 
-
+    /**
+     * @param player
+     * @return verdadero si el jugador tiene la mano vacia y se acaba el juego y
+     * si fuera falso que siga el juego
+     */
     public boolean endOfGame(Player player) {
         if (player.checkHand()) {
             iu.displayMessage("\nThe winner is: " + player.getName());
@@ -131,8 +140,13 @@ public class Game {
         }
         return false;
     }
-    
-public void checkCard(){
+
+     /**
+     * se mira que la carta en la mesa es igual a siete o dos
+     * si la carta es igual a 7 llama al método reverseTurns
+     * y si la carta es 2 llama al método drawTwo
+     */
+    public void checkCard(){
        if(table.checkSpecial()==2){
            drawTwo();
            iu.displayMessage("Player " + playerTurn.getName()+" draws two and losses turn");
