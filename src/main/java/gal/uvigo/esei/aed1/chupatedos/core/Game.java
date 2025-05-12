@@ -1,13 +1,9 @@
 package gal.uvigo.esei.aed1.chupatedos.core;
 
-import es.uvigo.esei.aed1.tads.stack.LinkedStack;
-import es.uvigo.esei.aed1.tads.stack.Stack;
 import gal.uvigo.esei.aed1.chupatedos.iu.IU;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Queue;
+import java.util.Stack;
 
 public class Game {
 
@@ -30,18 +26,20 @@ public class Game {
      */
     public void play() {
         createPlayer();
-        playerTurn=players.get(0);
+        playerTurn = players.get(0);
         deckOfCard.shuffleDeck();
         collectCard();
         table.addPlayedCard(firstCard());
-        checkSpecialCard();
+        checkFirstSpecialCard();
         boolean endGame = false;
         do {
-            Card topCard = table.UpsideCard();
+            Card topCard = table.upsideCard();
+            System.out.println(deckOfCard.toString());
+
             iu.showTable(table);
-            iu.showPlayerTurn(playerTurn);
+            iu.displayMessage("\nTurn of: " + playerTurn.getName());
             if (playerTurn.legalCards(topCard).isEmpty()) {
-                iu.showAlertNoLegalCards(playerTurn);
+                iu.displayMessage("\n" + playerTurn.getName() + " doesn't have legal cards, must collect card");
                 playerTurn.collectCard(this.loadCard());
             }
             if (!playerTurn.legalCards(topCard).isEmpty()) {
@@ -51,12 +49,12 @@ public class Game {
                 checkSpecialCard();
                 endGame = this.endOfGame(playerTurn);
             } else {
-                iu.showAlertLostTurn(playerTurn);
+                iu.displayMessage("\n" + playerTurn.getName() + " don't play a card and loses turn");
             }
 
             playerTurn = nextPlayer(playerTurn);
         } while (!endGame);
-        
+
     }
 
     /**
@@ -96,7 +94,8 @@ public class Game {
     public void selectCard(Player player, List<Card> listOfCards) {
         int numCard = iu.askNumCard(listOfCards);
         Card cardSelected = listOfCards.get(numCard);
-        table.addPlayedCard(player.playCard(cardSelected));
+        player.playCard(cardSelected);
+        table.addPlayedCard(cardSelected);
         iu.displayMessage(player.getName() + " played: " + cardSelected);
     }
 
@@ -108,11 +107,11 @@ public class Game {
      */
     public Card loadCard() {
         if (deckOfCard.getSize() == 0) {
-            Card lastCardPlayed = table.UpsideCard();
-            while (!table.getPlayedCards().isEmpty()) {
-                deckOfCard.addCard(table.removeCard());
+            Stack<Card> stack = new Stack<>();
+            stack.addAll(table.playedCardMinusTopPlayed());
+            while (!stack.isEmpty()) {
+                deckOfCard.addCard(stack.pop());
             }
-            table.addPlayedCard(lastCardPlayed);
             deckOfCard.shuffleDeck();
         }
         return deckOfCard.removeCard();
@@ -121,45 +120,77 @@ public class Game {
     /**
      *
      * @param player
-     * @return el player sigiente 
+     * @return el player sigiente
      */
     public Player nextPlayer(Player player) {
-        if (player.equals(players.getLast())||player == null) {
+        if (player.equals(players.getLast())) {
             return players.getFirst();
         }
         return players.get(players.indexOf(player) + 1);
     }
+
     /**
-     * se mira que la carta en la mesa es igual a siete o dos
-     * si la carta es igual a 7 llama al método reverseTurns
-     * y si la carta es 2 llama al método drawTwo
+     * 
      */
-    public void checkSpecialCard(){
-         if (table.UpsideCard().getNumber() == 7) {
+    public void checkFirstSpecialCard() {
+        if (table.upsideCard().getNumber() == 7) {
             this.reverseTurns();
+            playerTurn = nextPlayer(playerTurn);
+            iu.displayMessage("The turns have been inverted");
         }
-        if (table.UpsideCard().getNumber() == 2) {
+        if (table.upsideCard().getNumber() == 2) {
+            this.drawTwoFirstCard();
+            
+        }
+    }
+
+    /**
+     * se mira que la carta en la mesa es igual a siete o dos si la carta es
+     * igual a 7 llama al método reverseTurns y si la carta es 2 llama al método
+     * drawTwo
+     */
+    public void checkSpecialCard() {
+        if (table.upsideCard().getNumber() == 7) {
+            this.reverseTurns();
+            iu.displayMessage("The turns have been inverted");
+        }
+        if (table.upsideCard().getNumber() == 2) {
             this.drawTwo();
+            
         }
     }
-/**
- *  El jugador siguiente roba 2 cartas
- *  y pasamos el turno al siguiente jugador (saltando al que perdió el turno)
- */
+
+    /**
+     * El jugador siguiente roba 2 cartas y pasamos el turno al siguiente
+     * 
+     */
     public void drawTwo() {
-    for(int i = 0; i < 2; i++ ){
-        playerTurn.collectCard(loadCard());
+        playerTurn = nextPlayer(playerTurn);
+        for (int i = 0; i < 2; i++) {
+            playerTurn.collectCard(loadCard());
+        }
+        iu.displayMessage(playerTurn.getName() + " has to draw 2 cards and looses their turn!");
+        
     }
-    iu.displayMessage(playerTurn.getName() + " has to draw 2 cards and loses their turn!");
-    playerTurn = nextPlayer(playerTurn);
-}
-  
-/**
- * invierte el orden de los turnos usando una pila para reordenar la lista de jugadores, 
- * lo que cambia la dirección del juego cuando se juega una carta especial (7)
- */
+    
+    /**
+     * El jugador siguiente roba 2 cartas y pasamos el turno al siguiente
+     */
+    public void drawTwoFirstCard(){
+        for (int i = 0; i < 2; i++) {
+            playerTurn.collectCard(loadCard());
+        }
+        iu.displayMessage(playerTurn.getName() + " has to draw 2 cards and looses their turn!");
+         playerTurn = nextPlayer(playerTurn);
+    }
+
+    /**
+     * invierte el orden de los turnos usando una pila para reordenar la lista
+     * de jugadores, lo que cambia la dirección del juego cuando se juega una
+     * carta especial (7)
+     */
     public void reverseTurns() {
-        Stack<Player> temp = new LinkedStack<>();
+        Stack<Player> temp = new Stack<>();
         for (int i = 0; i < players.size(); i++) {
             temp.push(players.get(i));
         }
