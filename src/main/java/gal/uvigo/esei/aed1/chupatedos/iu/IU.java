@@ -74,7 +74,7 @@ public class IU {
     private int numberPlayers() {
         int numPlayers = 0;
         do {
-            numPlayers = readNumber("Insert number of players: ");
+            numPlayers = readNumber("Insert the number of players: ");
         } while (numPlayers < 2 || numPlayers > 5);
         return numPlayers;
     }
@@ -83,7 +83,7 @@ public class IU {
         List<String> name = new ArrayList<>();
         int numPlayers = numberPlayers();
         for (int i = 0; i < numPlayers; i++) {
-            String Name = readString("Insert player name: ");
+            String Name = readString("Insert the player's name: ");
             name.add(Name);
         }
         return name;
@@ -118,12 +118,20 @@ public class IU {
     public int askNumCard(List<Card> listOfCards) {
         int num = 0;
         do {
-            num = readNumber("\nInsert the number of the card selected is: ");
+            num = readNumber("\nInsert the number of the card you want to play from 1 - " + listOfCards.size()+ ": ");
         } while (num < 0 || num > listOfCards.size());
-        return num;
+        return num-1;
     }
 
-    
+    /**
+     * Muestra las cartas seleccionadas por los jugadores
+     *
+     * @param list
+     */
+    public void showSelectedCards(List<Card> list) {
+        System.out.println(list);
+
+    }
 
     /**
      * Muestra las cartas que hay en la mesa
@@ -134,9 +142,6 @@ public class IU {
         System.out.println(table);
     }
 
-    
-      
-
     /**
      *
      * Muestra las cartas legales
@@ -144,11 +149,10 @@ public class IU {
      * @param legalCards
      */
     public void showLegalCards(List<Card> legalCards) {
+        System.out.println("\nLegal card: ");
         for (Card c : legalCards) {
             System.out.println(c);
         }
     }
-
-   
-
+  
 }
