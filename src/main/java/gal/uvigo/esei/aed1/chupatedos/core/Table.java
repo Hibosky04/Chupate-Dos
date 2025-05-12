@@ -1,16 +1,46 @@
 package gal.uvigo.esei.aed1.chupatedos.core;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 public class Table {
-
+    
     private Stack<Card> playedCards;
-
+    
     public Table() {
         this.playedCards = new Stack<>();
+    }
+    
+    /**
+    * Agrega una carta a la mesa
+    * 
+    */
+    public void addPlayedCard(Card card){
+        this.playedCards.push(card);
+    }
+    
+    /**
+    * Cantidad de cartas jugadas
+    * @return devuelve cuantas cartas ya han sido jugadas
+    */
+    public int size(){
+        return this.playedCards.size();
+    }
+    
+    /**
+    *  Carta en juego
+    * @return muestra la primera carta de la pila
+    */
+    public Card upsideCard(){
+        return playedCards.peek();
+    }
+    
+    /**
+     * Elimina una carta de la pila de las ya jugadas
+     */
+    public Card removeCard(){
+        return playedCards.pop();
     }
 
     /**
@@ -27,40 +57,6 @@ public class Table {
         return list;
     }
 
-    /**
-    * Agrega una carta a la mesa
-    * 
-    */
-
-    public void addPlayedCard(Card card){
-        this.playedCards.push(card);
-    }
-
-    /**
-    * Cantidad de cartas jugadas
-    * @return devuelve cuantas cartas ya han sido jugadas
-    */
-    public int size(){
-        return this.playedCards.size();
-    }
-    /**
-    *  Carta en juego
-    * @return muestra la primera carta de la pila
-    */
-
-    public Card upsideCard(){
-        return playedCards.peek();
-    }
-
-    /**
-     * Elimina una carta de la pila de las ya jugadas
-     */
-
-    public Card removeCard(){
-        return playedCards.pop();
-    }
-   
-        
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -70,5 +66,6 @@ public class Table {
     }
 
     
+ 
     
 }
